@@ -52,7 +52,9 @@ export default function HomeScreen() {
       />
       <View style={styles.mainWrapper}>
         {isPending ? (
-          <Text>Loading...</Text>
+          <View style={styles.tryAgainWrapper}>
+            <Text>Loading...</Text>
+          </View>
         ) : isError ? (
           <View style={styles.tryAgainWrapper}>
             <Text>Failed to fetch</Text>
@@ -114,5 +116,8 @@ const styles = StyleSheet.create({
   },
   tryAgainWrapper: {
     gap: 8,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

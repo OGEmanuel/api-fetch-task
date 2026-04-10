@@ -33,7 +33,9 @@ const UserDetails = () => {
         }}
       />
       {isPending ? (
-        <Text>Loading...</Text>
+        <View style={styles.tryAgainWrapper}>
+          <Text>Loading...</Text>
+        </View>
       ) : isError ? (
         <View style={styles.tryAgainWrapper}>
           <Text>Failed to fetch</Text>
@@ -92,6 +94,9 @@ const styles = StyleSheet.create({
     opacity: 0.75,
   },
   tryAgainWrapper: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
     gap: 8,
   },
 });
