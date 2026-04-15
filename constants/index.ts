@@ -13,4 +13,9 @@ export interface USER_DETAILS extends USER {
   };
   phone: string;
   website: string;
+  company: {
+    name: string;
+    catchPhrase: string;
+    bs: string;
+  };
 }

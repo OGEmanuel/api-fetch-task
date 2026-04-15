@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: "white",
+    borderColor: "#d5ceb0",
     paddingHorizontal: 8,
   },
 });
