@@ -1,28 +1,12 @@
+import axios from "axios";
+
+const BASE_URL = "https://jsonplaceholder.typicode.com/users";
+
 export const QUERIES = {
   getUsers: async () => {
-    const res = await fetch("https://jsonplaceholder.typicode.com/users");
-
-    if (!res.ok) {
-      const error = await res.json().catch(() => null);
-
-      throw new Error(error?.message || "Request failed");
-    }
-
-    const data = await res.json();
-
-    return data;
+    return await axios.get(BASE_URL);
   },
   getUserDetails: async (id: number) => {
-    const res = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`);
-
-    if (!res.ok) {
-      const error = await res.json().catch(() => null);
-
-      throw new Error(error?.message || "Request failed");
-    }
-
-    const data = await res.json();
-
-    return data;
+    return await axios.get(`${BASE_URL}/${id}`);
   },
 };

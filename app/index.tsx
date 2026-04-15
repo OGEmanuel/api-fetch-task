@@ -3,7 +3,15 @@ import { QUERIES } from "@/lib/queries";
 import { QUERY_KEYS } from "@/lib/queries/query-keys";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Stack, useRouter } from "expo-router";
-import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
+import { useState } from "react";
+import {
+  FlatList,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 
 const useGetUsers = () => {
   return useQuery({
@@ -14,9 +22,27 @@ const useGetUsers = () => {
 
 export default function HomeScreen() {
   const { data, isPending, isError } = useGetUsers();
+  const [searchInput, setSearchInput] = useState("");
+  const [search, setSearch] = useState<USER[]>([]);
   const queryClient = useQueryClient();
 
-  const userData: USER[] = data;
+  const userData: USER[] = data?.data;
+
+  const handleChange = (e: string) => {
+    const query = e.trim().toLowerCase();
+    setSearchInput(e);
+
+    if (!query) {
+      setSearch(userData);
+      return;
+    }
+
+    const filteredUser = userData.filter((user) =>
+      user.name.toLowerCase().includes(query),
+    );
+
+    setSearch(filteredUser);
+  };
 
   const RenderUserData = (props: { users: USER }) => {
     const { users } = props;
@@ -71,9 +97,18 @@ export default function HomeScreen() {
           </View>
         ) : (
           <>
-            <Text>Here's a list of users:</Text>
+            <TextInput
+              placeholder="Search by name"
+              onChangeText={(e) => handleChange(e)}
+              style={styles.textInput}
+            />
             <FlatList
-              data={userData}
+              data={searchInput.trim() !== "" ? search : userData}
+              ListEmptyComponent={
+                <View style={[styles.tryAgainWrapper, styles.mainWrapper]}>
+                  <Text>No user named '{searchInput}'</Text>
+                </View>
+              }
               renderItem={(item) => <RenderUserData users={item.item} />}
               contentContainerStyle={styles.contentContainer}
               keyExtractor={(item) => item.id.toString()}
@@ -119,5 +154,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  textInput: {
+    height: 40,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "white",
+    paddingHorizontal: 8,
   },
 });

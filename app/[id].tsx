@@ -23,7 +23,7 @@ const UserDetails = () => {
 
   const queryClient = useQueryClient();
 
-  const userDetailsData: USER_DETAILS = data;
+  const userDetailsData: USER_DETAILS = data?.data;
 
   return (
     <>
