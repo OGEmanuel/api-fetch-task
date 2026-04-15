@@ -26,11 +26,18 @@ const UserDetails = () => {
 
   const userDetailsData: USER_DETAILS = data?.data;
 
+  const getLastWord = (str: string) => {
+    const match = str?.trim().match(/(\S+)$/);
+    return match ? match[1] : "";
+  };
+
   return (
     <>
       <Stack.Screen
         options={{
-          title: userDetailsData?.username ?? "User details",
+          title: userDetailsData
+            ? getLastWord(userDetailsData?.name)
+            : "User details",
         }}
       />
       {isPending ? (

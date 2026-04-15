@@ -103,6 +103,7 @@ export default function HomeScreen() {
               style={styles.textInput}
             />
             <FlatList
+              showsVerticalScrollIndicator={false}
               data={searchInput.trim() !== "" ? search : userData}
               ListEmptyComponent={
                 <View style={[styles.tryAgainWrapper, styles.mainWrapper]}>
